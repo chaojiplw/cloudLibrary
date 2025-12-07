@@ -1,0 +1,208 @@
+/* 登录管理主容器样式 */
+.loginmanage {
+    height: 600px;
+    width: 1920px;
+    background: url(../img/manage-bg.png) no-repeat center center;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+/* 登录管理标题样式 */
+.loginmanage .manage-title {
+    width: 420px;
+    margin: 0 auto;
+    font-size: 30px;
+    color: #fff;
+    letter-spacing: 5px;
+    text-shadow: 2px 2px 0 #646464;
+}
+
+/* 登录表单容器样式 */
+.loginform {
+    width: 380px;
+    background: #fff;
+    margin: 45px auto 0;
+    position: relative;
+    padding: 20px;
+}
+
+/* 通用图片样式 */
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+/* 表单基础样式 */
+.sui-form {
+    margin-top: 15px;
+}
+
+/* 表单前置输入框样式 */
+.sui-form .input-prepend {
+    margin-bottom: 16px;
+}
+
+/* 选项卡容器样式 */
+.sui-nav.nav-tabs.tab-wraped > li {
+    width: 50%;
+}
+
+/* 激活状态选项卡样式 */
+.sui-nav.nav-tabs.tab-wraped > li.active > a {
+    padding-top: 0;
+    border-top: 1px solid #28a3ef;
+}
+
+/* 选项卡默认样式 */
+.sui-nav.nav-tabs.tab-wraped > li > a {
+    padding: 0;
+}
+
+/* 激活状态选项卡标题样式 */
+.sui-nav.nav-tabs.tab-wraped > li.active h3 {
+    color: #c8111a;
+}
+
+/* 表单前置附加元素样式 */
+.sui-form .input-prepend .add-on {
+    padding: 6px 5px;
+    background-color: #cfcdcd;
+    width: 35px;
+    height: 23px;
+    *float: left; /* IE7 兼容样式 */
+}
+
+/* 表单输入框基础样式 */
+.sui-form input[type=text],
+.sui-form input[type=password] {
+    height: 37px;
+}
+
+/* 表单输入框宽度样式 */
+.sui-form input.span2 {
+    width: 284px;
+    *float: left; /* IE7 兼容样式 */
+}
+
+/* 设置/忘记密码区域样式 */
+.setting {
+    position: relative;
+    margin: 0 0 15px;
+}
+
+/* 忘记密码链接样式 */
+.setting .forget {
+    position: absolute;
+    right: 0;
+}
+
+/* 危险按钮（登录按钮）样式 */
+.btn-danger {
+    background-color: #c81623;
+    padding: 6px;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: 微软雅黑;
+    word-spacing: 4px;
+}
+
+/* 其他登录方式区域样式 */
+.otherlogin {
+    position: relative;
+    margin-top: 30px;
+}
+
+/* 注册链接样式 */
+.otherlogin .register {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+}
+
+/* 其他登录方式图标列表样式 */
+.types ul li {
+    list-style-type: none;
+    display: inline-block;
+    *display: inline; /* IE7 兼容样式 */
+    *zoom: 1; /* IE7 兼容样式 */
+    width: 40px;
+    height: 55px;
+}
+
+/* 滑块验证容器样式 */
+#slider {
+    width: 300px;
+    height: 40px;
+    position: relative;
+    border-radius: 2px;
+    background-color: #dae2d0;
+    overflow: hidden;
+    text-align: center;
+    user-select: none;
+    -moz-user-select: none; /* Firefox 兼容 */
+    -webkit-user-select: none; /* Chrome/Safari 兼容 */
+}
+
+/* 滑块背景样式 */
+#slider_bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: #7AC23C;
+    z-index: 1;
+}
+
+/* 滑块按钮样式 */
+#label {
+    width: 46px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid #ccc;
+    background: #fff;
+    z-index: 3;
+    cursor: move;
+    color: #ff9e77;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+/* 滑块提示文字样式 */
+#labelTip {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 13px;
+    font-family: 'Microsoft Yahei', serif;
+    color: #787878;
+    line-height: 38px;
+    text-align: center;
+    z-index: 2;
+}
+
+/* 版权信息区域样式 */
+.copyright {
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* 版权信息列表项样式 */
+.copyright ul li {
+    list-style-type: none;
+    display: inline-block;
+    *display: inline; /* IE7 兼容样式 */
+    *zoom: 1; /* IE7 兼容样式 */
+    border-right: 1px solid #e4e4e4;
+    padding: 0 20px;
+    margin: 15px 0;
+}
+
+/* 最后一个版权列表项（去除右侧边框） */
+.copyright ul li:last-child {
+    border-right: 0;
+}

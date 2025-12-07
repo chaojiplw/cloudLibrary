@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.BookMapper">
+
+    <!-- 根据ID查询图书信息 -->
+    <select id="findById" resultType="com.itheima.domain.Book">
+        SELECT
+            book_id as id,
+            book_name as name,
+            book_isbn as isbn,
+            book_press as press,
+            book_author as author,
+            book_pagination as pagination,
+            book_price as price,
+            book_uploadtime AS uploadTime,
+            book_status as status,
+            book_borrower as borrower,
+            book_borrowtime AS borrowTime,
+            book_returntime AS returnTime
+        FROM book
+        WHERE book_id = #{id}
+    </select>
+
+    <!-- 根据上架时间查询最新上架的图书信息 -->
+    <select id="selectNewBooks" resultType="com.itheima.domain.Book">
+        SELECT
+            book_id as id,
+            book_name as name,
+            book_isbn as isbn,
+            book_press as press,
+            book_author as author,
+            book_pagination as pagination,
+            book_price as price,
+            book_uploadtime AS uploadTime,
+            book_status as status,
+            book_borrower as borrower,
+            book_borrowtime AS borrowTime,
+            book_returntime AS returnTime
+        FROM book
+        ORDER BY book_uploadtime DESC
+            LIMIT 5
+    </select>
+
+
+    <!-- 更新图书信息（用于借阅图书） -->
+    <update id="updateBook" parameterType="com.itheima.domain.Book">
+        UPDATE book
+        SET
+            book_status = #{status},
+            book_borrower = #{borrower},
+            book_borrowtime = #{borrowTime},
+            book_returntime = #{returnTime}
+        WHERE book_id = #{id}
+    </update>
+
+
+</mapper>
