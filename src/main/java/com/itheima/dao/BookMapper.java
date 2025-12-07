@@ -42,4 +42,11 @@ public interface BookMapper {
             "</script>"})
     @ResultMap("bookMap")
     Page<Book> searchBooks(Book book);
+    
+    /**
+     * 新增图书
+     * @param book 图书对象
+     * @return 影响的行数
+     */
+    int addBook(Book book);
 }

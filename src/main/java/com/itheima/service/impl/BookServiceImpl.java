@@ -9,6 +9,9 @@ import com.itheima.domain.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -52,5 +55,13 @@ public class BookServiceImpl implements BookService {
         com.github.pagehelper.Page<Book> page = bookMapper.searchBooks(book);
         // 封装分页结果
         return new PageResult(page.getTotal(), page.getResult());
+    }
+    
+    @Override
+    public Integer addBook(Book book) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //设置新增图书的上架时间
+        book.setUploadTime(dateFormat.format(new Date()));
+        return bookMapper.addBook(book);
     }
 }

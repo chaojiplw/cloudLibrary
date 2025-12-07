@@ -6,11 +6,8 @@
     <title>新书推荐</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminLTE.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pagination.css">
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-    <script src="${pageContext.request.contextPath}/js/pagination.js"></script>
-    <script src="${pageContext.request.contextPath}/js/my.js"></script>
 </head>
 <body class="hold-transition skin-red sidebar-mini">
 <!--数据展示头部-->

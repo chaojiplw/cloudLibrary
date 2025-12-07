@@ -42,23 +42,14 @@ public class BookController {
     }
     
     /**
-     * 查询最新上架的图书
-     * @param pageNum 页码，默认为1
-     * @param pageSize 每页数量，默认为5
-     * @return 分页结果
+     * 查询最新上架的图书（仅显示前5本）
+     * @param model 模型
+     * @return 视图名称
      */
     @RequestMapping("/selectNewBooks")
-    public String selectNewBooks(Integer pageNum, Integer pageSize, Model model) {
-        // 设置默认值
-        if (pageNum == null) {
-            pageNum = 1;
-        }
-        if (pageSize == null) {
-            pageSize = 5;
-        }
-        
-        // 调用服务层方法查询最新上架的图书
-        PageResult pageResult = bookService.selectNewBooks(pageNum, pageSize);
+    public String selectNewBooks(Model model) {
+        // 查询最新上架的图书，固定显示前5本
+        PageResult pageResult = bookService.selectNewBooks(1, 5);
         
         // 将结果添加到model中
         model.addAttribute("pageResult", pageResult);
@@ -136,6 +127,28 @@ public class BookController {
         
         // 返回视图名称
         return "admin/books";
+    }
+    
+    /**
+     * 新增图书
+     * @param book 图书对象
+     * @return 响应结果
+     */
+    @ResponseBody
+    @RequestMapping("/addBook")
+    public Result addBook(Book book) {
+        try {
+            // 设置新增图书的状态为"可借阅"(0)
+            book.setStatus("0");
+            Integer count = bookService.addBook(book);
+            if (count != 1) {
+                return new Result(false, "新增图书失败!");
+            }
+            return new Result(true, "新增图书成功!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "新增图书失败!");
+        }
     }
     
     /**

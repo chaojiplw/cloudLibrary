@@ -35,4 +35,11 @@ public interface BookService {
      * @return 分页结果
      */
     PageResult search(Book book, Integer pageNum, Integer pageSize);
+    
+    /**
+     * 新增图书
+     * @param book 图书对象
+     * @return 影响的行数
+     */
+    Integer addBook(Book book);
 }
