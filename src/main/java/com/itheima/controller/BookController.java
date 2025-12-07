@@ -108,6 +108,37 @@ public class BookController {
     }
     
     /**
+     * 分页查询图书信息
+     * @param book 查询条件
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param model 模型
+     * @return 视图名称
+     */
+    @RequestMapping("/search")
+    public String search(Book book, Integer pageNum, Integer pageSize, Model model) {
+        // 设置默认值
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 10; // 每页默认显示10条数据
+        }
+        
+        // 调用服务层方法查询图书信息
+        PageResult pageResult = bookService.search(book, pageNum, pageSize);
+        
+        // 将结果添加到model中
+        model.addAttribute("pageResult", pageResult);
+        model.addAttribute("search", book);
+        model.addAttribute("pageNum", pageNum);
+        model.addAttribute("gourl", "/book/search");
+        
+        // 返回视图名称
+        return "admin/books";
+    }
+    
+    /**
      * 响应结果内部类
      */
     public static class Result {

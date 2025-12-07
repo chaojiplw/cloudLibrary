@@ -43,4 +43,14 @@ public class BookServiceImpl implements BookService {
         int result = bookMapper.updateBook(book);
         return result > 0;
     }
+    
+    @Override
+    public PageResult search(Book book, Integer pageNum, Integer pageSize) {
+        // 设置分页查询的参数，开始分页
+        PageHelper.startPage(pageNum, pageSize);
+        // 执行分页查询
+        com.github.pagehelper.Page<Book> page = bookMapper.searchBooks(book);
+        // 封装分页结果
+        return new PageResult(page.getTotal(), page.getResult());
+    }
 }

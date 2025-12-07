@@ -1,6 +1,10 @@
 package com.itheima.dao;
 
 import com.itheima.domain.Book;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Select;
+import com.github.pagehelper.Page;
 import java.util.List;
 
 public interface BookMapper {
@@ -23,4 +27,19 @@ public interface BookMapper {
      * @return 影响的行数
      */
     int updateBook(Book book);
+    
+    /**
+     * 分页查询图书信息
+     * @param book 查询条件
+     * @return 图书分页结果
+     */
+    @Select({"<script>" +
+            "SELECT * FROM book where book_status !='3'" +
+            "<if test=\"name != null and name != ''\"> AND book_name like CONCAT('%',#{name},'%')</if>" +
+            "<if test=\"press != null and press != ''\"> AND book_press like CONCAT('%', #{press},'%') </if>" +
+            "<if test=\"author != null and author != ''\"> AND book_author like CONCAT('%', #{author},'%')</if>" +
+            " order by book_status" +
+            "</script>"})
+    @ResultMap("bookMap")
+    Page<Book> searchBooks(Book book);
 }

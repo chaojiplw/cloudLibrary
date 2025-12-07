@@ -26,4 +26,13 @@ public interface BookService {
      * @return 是否借阅成功
      */
     boolean borrowBook(Book book);
+    
+    /**
+     * 分页查询图书
+     * @param book 查询条件
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @return 分页结果
+     */
+    PageResult search(Book book, Integer pageNum, Integer pageSize);
 }
