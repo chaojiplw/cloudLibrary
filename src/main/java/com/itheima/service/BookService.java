@@ -42,4 +42,11 @@ public interface BookService {
      * @return 影响的行数
      */
     Integer addBook(Book book);
+    
+    /**
+     * 编辑图书信息
+     * @param book 图书对象
+     * @return 影响的行数
+     */
+    Integer editBook(Book book);
 }

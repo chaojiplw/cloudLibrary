@@ -54,6 +54,7 @@
             book_borrowtime AS borrowTime,
             book_returntime AS returnTime
         FROM book
+        WHERE book_status != '3'
         ORDER BY book_uploadtime DESC
             LIMIT 5
     </select>
@@ -79,5 +80,19 @@
         values (#{id},#{name},#{isbn},#{press},#{author},#{pagination},
         #{price},#{uploadTime},#{status},#{borrower},#{borrowTime},#{returnTime})
     </insert>
+
+    <!-- 编辑图书 -->
+    <update id="editBook" parameterType="com.itheima.domain.Book">
+        UPDATE book
+        SET
+            book_name = #{name},
+            book_isbn = #{isbn},
+            book_press = #{press},
+            book_author = #{author},
+            book_pagination = #{pagination},
+            book_price = #{price},
+            book_status = #{status}
+        WHERE book_id = #{id}
+    </update>
 
 </mapper>

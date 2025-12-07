@@ -49,4 +49,11 @@ public interface BookMapper {
      * @return 影响的行数
      */
     int addBook(Book book);
+    
+    /**
+     * 编辑图书
+     * @param book 图书对象
+     * @return 影响的行数
+     */
+    int editBook(Book book);
 }

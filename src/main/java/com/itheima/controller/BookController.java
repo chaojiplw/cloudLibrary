@@ -152,6 +152,24 @@ public class BookController {
     }
     
     /**
+     * 编辑图书
+     * @param book 图书对象
+     * @return 响应结果
+     */
+    @ResponseBody
+    @RequestMapping("/editBook")
+    public Result editBook(Book book) {
+        try {
+            Integer count= bookService.editBook(book);
+            if(count!=1) { return new Result(false, "编辑失败!"); }
+            return new Result(true, "编辑成功!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "编辑失败!");
+        }
+    }
+    
+    /**
      * 响应结果内部类
      */
     public static class Result {

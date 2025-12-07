@@ -64,4 +64,12 @@ public class BookServiceImpl implements BookService {
         book.setUploadTime(dateFormat.format(new Date()));
         return bookMapper.addBook(book);
     }
+    
+    /**
+     * 编辑图书信息
+     */
+    @Override
+    public Integer editBook(Book book) {
+        return bookMapper.editBook(book);
+    }
 }
