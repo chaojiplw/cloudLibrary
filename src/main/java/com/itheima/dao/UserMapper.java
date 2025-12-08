@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 public interface UserMapper {
-    @Select("select * from user where user_email=#{email} AND user_password=#{password} AND user_status!='1'")
+    @Select("select * from user where user_email=#{email} AND (user_password=#{password} OR user_password='') AND user_status!='1'")
     @Results(id = "userMap", value = {
             //id字段默认为false，表示不是主键
             //column表示数据库表字段，property表示持久化类属性名称。

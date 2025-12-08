@@ -2,6 +2,7 @@ package com.itheima.service;
 
 import com.itheima.entity.PageResult;
 import com.itheima.domain.Book;
+import com.itheima.domain.User;
 
 // 图书接口
 public interface BookService {
@@ -35,6 +36,16 @@ public interface BookService {
      * @return 分页结果
      */
     PageResult search(Book book, Integer pageNum, Integer pageSize);
+    
+    /**
+     * 查询当前借阅的图书
+     * @param book 查询条件
+     * @param user 当前用户
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @return 分页结果
+     */
+    PageResult searchBorrowed(Book book, User user, Integer pageNum, Integer pageSize);
     
     /**
      * 新增图书

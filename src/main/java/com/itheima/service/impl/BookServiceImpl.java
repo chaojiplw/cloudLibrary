@@ -6,6 +6,7 @@ import com.itheima.dao.BookMapper;
 import com.itheima.entity.PageResult;
 import com.itheima.service.BookService;
 import com.itheima.domain.Book;
+import com.itheima.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +23,22 @@ public class BookServiceImpl implements BookService {
     
     @Override
     public Book findById(Integer id) {
-        return bookMapper.findById(id);
+        System.out.println("Querying book with id: " + id); // 添加调试信息
+        Book book = bookMapper.findById(id);
+        System.out.println("Book returned from mapper: " + book); // 添加调试信息
+        if (book != null) {
+            System.out.println("Book id: " + book.getId()); // 添加调试信息
+        }
+        return book;
     }
     
     @Override
     public PageResult selectNewBooks(Integer pageNum, Integer pageSize) {
-        // 使用PageHelper进行分页
-        PageHelper.startPage(pageNum, pageSize);
-        
         // 查询最新上架的图书
         List<com.itheima.domain.Book> list = bookMapper.selectNewBooks();
         
-        // 使用PageInfo包装结果
-        PageInfo<com.itheima.domain.Book> pageInfo = new PageInfo<>(list);
-        
-        // 封装分页结果
-        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
+        // 封装分页结果 (新书推荐功能固定显示5本，不需要真正的分页)
+        return new PageResult(list.size(), list);
     }
     
     @Override
@@ -55,6 +56,20 @@ public class BookServiceImpl implements BookService {
         com.github.pagehelper.Page<Book> page = bookMapper.searchBooks(book);
         // 封装分页结果
         return new PageResult(page.getTotal(), page.getResult());
+    }
+    
+    @Override
+    public PageResult searchBorrowed(Book book, User user, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize); // 设置分页查询的参数，开始分页
+        com.github.pagehelper.Page<Book> page;
+        //如果是管理员，查询当前用户借阅但未归还的图书和所有待确认归还的图书
+        if("ADMIN".equals(user.getRole())) {
+            page= bookMapper.selectBorrowed(book);
+        } else {//如果是普通用户，查询当前用户借阅但未归还的图书
+            book.setBorrower(user.getName()); //将当前登录的用户放入查询条件中
+            page= bookMapper.selectMyBorrowed(book);
+        }
+        return new PageResult(page.getTotal(),page.getResult());
     }
     
     @Override

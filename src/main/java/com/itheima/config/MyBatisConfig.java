@@ -24,6 +24,11 @@ public class MyBatisConfig {
         Resource[] resources = resolver.getResources("classpath:mapper/*.xml");
         factoryBean.setMapperLocations(resources);
         
+        // 启用驼峰命名规则映射
+        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+        configuration.setMapUnderscoreToCamelCase(true);
+        factoryBean.setConfiguration(configuration);
+        
         return factoryBean;
     }
     

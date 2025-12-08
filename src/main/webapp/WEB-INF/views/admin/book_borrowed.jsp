@@ -22,7 +22,7 @@
     <!--工具栏 数据搜索 -->
     <div class="box-tools pull-right">
         <div class="has-feedback">
-            <form action="${pageContext.request.contextPath}/book/searchBorrowed" method="post">
+            <form action="${pageContext.request.contextPath}/book/searchBorrowed" method="get">
                 图书名称：<input name="name" value="${search.name}">&nbsp&nbsp&nbsp&nbsp
                 图书作者：<input name="author" value="${search.author}">&nbsp&nbsp&nbsp&nbsp
                 出版社：<input name="press" value="${search.press}">&nbsp&nbsp&nbsp&nbsp
@@ -49,35 +49,43 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${pageResult.rows}" var="book">
+            <!-- 添加调试信息 -->
+            <c:if test="${empty pageResult.rows}">
                 <tr>
-                    <td>${book.name}</td>
-                    <td>${book.author}</td>
-                    <td>${book.press}</td>
-                    <td>${book.isbn}</td>
-                    <td>
-                        <c:if test="${book.status ==1}">借阅中</c:if>
-                        <c:if test="${book.status ==2}">归还中</c:if>
-                    </td>
-                    <td>${book.borrower}</td>
-                    <td>${book.borrowTime}</td>
-                    <td>${book.returnTime}</td>
-                    <td class="text-center">
-                        <c:if test="${book.status ==1}">
-                            <button type="button" class="btn bg-olive btn-xs" onclick="returnBook(${book.id})">归还
-                            </button>
-                        </c:if>
-                        <c:if test="${book.status ==2}">
-                            <button type="button" class="btn bg-olive btn-xs" disabled="true">归还中</button>
-                            <c:if test="${USER_SESSION.role =='ADMIN'}">
-                                <button type="button" class="btn bg-olive btn-xs" onclick="returnConfirm(${book.id})">
-                                    归还确认
+                    <td colspan="9" class="text-center">暂无数据</td>
+                </tr>
+            </c:if>
+            <c:if test="${not empty pageResult.rows}">
+                <c:forEach items="${pageResult.rows}" var="book">
+                    <tr>
+                        <td>${book.name}</td>
+                        <td>${book.author}</td>
+                        <td>${book.press}</td>
+                        <td>${book.isbn}</td>
+                        <td>
+                            <c:if test="${book.status eq '1'}">借阅中</c:if>
+                            <c:if test="${book.status eq '2'}">归还中</c:if>
+                        </td>
+                        <td>${book.borrower}</td>
+                        <td>${book.borrowTime}</td>
+                        <td>${book.returnTime}</td>
+                        <td class="text-center">
+                            <c:if test="${book.status eq '1'}">
+                                <button type="button" class="btn bg-olive btn-xs" onclick="returnBook(${book.id})">归还
                                 </button>
                             </c:if>
-                        </c:if>
-                    </td>
-                </tr>
-            </c:forEach>
+                            <c:if test="${book.status eq '2'}">
+                                <button type="button" class="btn bg-olive btn-xs" disabled="true">归还中</button>
+                                <c:if test="${USER_SESSION.role eq 'ADMIN'}">
+                                    <button type="button" class="btn bg-olive btn-xs" onclick="returnConfirm(${book.id})">
+                                        归还确认
+                                    </button>
+                                </c:if>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:if>
             </tbody>
         </table>
         <!-- 数据表格 /-->

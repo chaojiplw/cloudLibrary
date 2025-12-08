@@ -40,6 +40,8 @@ function resetFrom() {
     $vals.each(function(){
         $(this).attr("style","").val("")
     });
+    // 重置选择框
+    $("#ebstatus").val("0");
 }
 //重置添加和编辑窗口中输入框的样式
 function resetStyle() {
@@ -52,10 +54,25 @@ function resetStyle() {
 //查询id对应的图书信息，并将图书信息回显到编辑或借阅的窗口中
 function findBookById(id,doname) {
     resetStyle()
+    console.log("Finding book with id:", id, "and operation:", doname); // 添加调试信息
     var url = getProjectPath()+"/book/findById?id=" + id;
     $.get(url, function (response) {
+        console.log("Response received:", response); // 添加调试信息
+        //检查请求是否成功
+        if (!response.success) {
+            alert(response.message || "查询失败");
+            return;
+        }
+        
+        //检查数据是否存在
+        if (!response.data) {
+            alert("未找到相关数据");
+            return;
+        }
+        
         //如果是编辑图书，将获取的图书信息回显到编辑的窗口中
         if(doname=='edit'){
+            console.log("Response data:", response.data); // 调试信息
             $("#ebid").val(response.data.id);
             $("#ebname").val(response.data.name);
             $("#ebisbn").val(response.data.isbn);
@@ -64,6 +81,8 @@ function findBookById(id,doname) {
             $("#ebpagination").val(response.data.pagination);
             $("#ebprice").val(response.data.price);
             $("#ebstatus").val(response.data.status);
+            // 启用保存按钮
+            checkval();
         }
         //如果是借阅图书，将获取的图书信息回显到借阅的窗口中
         if(doname=='borrow'){
@@ -76,6 +95,9 @@ function findBookById(id,doname) {
             $("#bauthor").val(response.data.author);
             $("#bpagination").val(response.data.pagination);
         }
+    }).fail(function(xhr, status, error) {
+        alert("网络错误，查询失败: " + error);
+        console.error("AJAX Error:", xhr, status, error); // 调试信息
     })
 }
 //点击添加或编辑的窗口的确定按钮时，提交图书信息

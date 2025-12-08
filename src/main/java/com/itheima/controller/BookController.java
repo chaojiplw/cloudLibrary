@@ -29,10 +29,14 @@ public class BookController {
     @ResponseBody
     public Result findById(Integer id) {
         try {
+            System.out.println("Finding book with id: " + id); // 添加调试信息
             Book book = bookService.findById(id);
+            System.out.println("Book found: " + book); // 添加调试信息
             if (book != null) {
+                System.out.println("Found book: " + book.getId()); // 调试信息
                 return new Result(true, "查询成功！", book);
             } else {
+                System.out.println("No book found with id: " + id); // 添加调试信息
                 return new Result(false, "未找到指定图书！");
             }
         } catch (Exception e) {
@@ -130,6 +134,41 @@ public class BookController {
     }
     
     /**
+     * 查询当前借阅的图书
+     * @param book 查询条件
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param model 模型
+     * @param session HttpSession对象
+     * @return 视图名称
+     */
+    @RequestMapping("/searchBorrowed")
+    public String searchBorrowed(Book book, Integer pageNum, Integer pageSize, Model model, HttpSession session) {
+        // 设置默认值
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 10; // 每页默认显示10条数据
+        }
+        
+        // 获取当前登录用户
+        com.itheima.domain.User user = (com.itheima.domain.User) session.getAttribute("USER_SESSION");
+        
+        // 调用服务层方法查询当前借阅的图书信息
+        PageResult pageResult = bookService.searchBorrowed(book, user, pageNum, pageSize);
+        
+        // 将结果添加到model中
+        model.addAttribute("pageResult", pageResult);
+        model.addAttribute("search", book);
+        model.addAttribute("pageNum", pageNum);
+        model.addAttribute("gourl", "/book/searchBorrowed");
+        
+        // 返回视图名称
+        return "admin/book_borrowed";
+    }
+    
+    /**
      * 新增图书
      * @param book 图书对象
      * @return 响应结果
@@ -160,6 +199,14 @@ public class BookController {
     @RequestMapping("/editBook")
     public Result editBook(Book book) {
         try {
+            // 保留原图书的借阅相关信息
+            Book originalBook = bookService.findById(book.getId());
+            if (originalBook != null) {
+                book.setBorrower(originalBook.getBorrower());
+                book.setBorrowTime(originalBook.getBorrowTime());
+                book.setReturnTime(originalBook.getReturnTime());
+            }
+            
             Integer count= bookService.editBook(book);
             if(count!=1) { return new Result(false, "编辑失败!"); }
             return new Result(true, "编辑成功!");

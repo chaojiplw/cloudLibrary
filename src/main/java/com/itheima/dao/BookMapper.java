@@ -44,6 +44,20 @@ public interface BookMapper {
     Page<Book> searchBooks(Book book);
     
     /**
+     * 查询当前用户未归还的图书信息
+     * @param book 查询条件
+     * @return 图书分页结果
+     */
+    Page<Book> selectMyBorrowed(Book book);
+    
+    /**
+     * 查询当前用户未归还和所有待确认归还的图书信息（管理员使用）
+     * @param book 查询条件
+     * @return 图书分页结果
+     */
+    Page<Book> selectBorrowed(Book book);
+    
+    /**
      * 新增图书
      * @param book 图书对象
      * @return 影响的行数
