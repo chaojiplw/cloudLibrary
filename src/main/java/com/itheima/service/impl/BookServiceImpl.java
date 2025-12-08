@@ -10,8 +10,10 @@ import com.itheima.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itheima.service.RecordService;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +22,9 @@ public class BookServiceImpl implements BookService {
     
     @Autowired
     private BookMapper bookMapper;
+    
+    @Autowired
+    private RecordService recordService;
     
     @Override
     public Book findById(Integer id) {
@@ -113,6 +118,21 @@ public class BookServiceImpl implements BookService {
     public Integer returnConfirm(String id) {
         // 根据图书id查询图书的完整信息
         Book book = this.findById(Integer.valueOf(id));
+        
+        // 创建借阅记录
+        com.itheima.domain.Record record = new com.itheima.domain.Record();
+        record.setBookname(book.getName());
+        record.setBookisbn(book.getIsbn());
+        record.setBorrower(book.getBorrower());
+        record.setBorrowTime(book.getBorrowTime());
+        
+        // 设置归还时间为当前时间
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        record.setRemandTime(dateFormat.format(new Date()));
+        
+        // 保存借阅记录
+        recordService.addRecord(record);
+        
         // 将图书的借阅状态修改为可借阅
         book.setStatus("0");
         book.setBorrower(""); // 清除当前图书的借阅人信息

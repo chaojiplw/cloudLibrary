@@ -23,7 +23,7 @@
     <!--工具栏 数据搜索 -->
     <div class="box-tools pull-right">
         <div class="has-feedback">
-            <form action="${pageContext.request.contextPath}/record/searchRecords" method="post">
+            <form action="${pageContext.request.contextPath}/record/searchRecords" method="get">
                 <c:if test="${USER_SESSION.role =='ADMIN'}">
                     借阅人：<input name="borrower" value="${search.borrower}">&nbsp&nbsp&nbsp&nbsp
                 </c:if>
