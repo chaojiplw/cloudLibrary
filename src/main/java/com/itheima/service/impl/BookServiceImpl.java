@@ -87,4 +87,38 @@ public class BookServiceImpl implements BookService {
     public Integer editBook(Book book) {
         return bookMapper.editBook(book);
     }
+    
+    /**
+     * 归还图书
+     */
+    @Override
+    public boolean returnBook(String id, User user) {
+        // 根据图书id查询出图书的完整信息
+        Book book = this.findById(Integer.valueOf(id));
+        // 再次核验当前登录人员和图书借阅者是不是同一个人
+        boolean rb = book.getBorrower().equals(user.getName());
+        // 如果是同一个人，允许归还
+        if (rb) {
+            // 将图书借阅状态修改为归还中
+            book.setStatus("2");
+            bookMapper.editBook(book);
+        }
+        return rb;
+    }
+    
+    /**
+     * 归还确认
+     */
+    @Override
+    public Integer returnConfirm(String id) {
+        // 根据图书id查询图书的完整信息
+        Book book = this.findById(Integer.valueOf(id));
+        // 将图书的借阅状态修改为可借阅
+        book.setStatus("0");
+        book.setBorrower(""); // 清除当前图书的借阅人信息
+        book.setBorrowTime(""); // 清除当前图书的借阅时间信息
+        // 清除当前图书的预计归还时间信息
+        book.setReturnTime("");
+        return bookMapper.editBook(book);
+    }
 }

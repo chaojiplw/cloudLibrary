@@ -114,7 +114,7 @@
         book_borrowtime,
         book_returntime
         FROM book
-        WHERE book_status = '1' AND book_borrower = #{borrower}
+        WHERE (book_status = '1' OR book_status = '2') AND book_borrower = #{borrower}
         <if test="name != null and name != '' and name.trim() != ''">
             AND book_name LIKE CONCAT('%', #{name}, '%')
         </if>

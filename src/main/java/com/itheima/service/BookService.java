@@ -60,4 +60,19 @@ public interface BookService {
      * @return 影响的行数
      */
     Integer editBook(Book book);
+    
+    /**
+     * 归还图书
+     * @param id 图书ID
+     * @param user 当前用户
+     * @return 是否归还成功
+     */
+    boolean returnBook(String id, User user);
+    
+    /**
+     * 归还确认
+     * @param id 图书ID
+     * @return 影响的行数
+     */
+    Integer returnConfirm(String id);
 }

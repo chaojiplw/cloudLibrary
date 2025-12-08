@@ -217,6 +217,49 @@ public class BookController {
     }
     
     /**
+     * 归还图书
+     * @param id 图书ID
+     * @param session HttpSession对象
+     * @return 响应结果
+     */
+    @ResponseBody
+    @RequestMapping("/returnBook")
+    public Result returnBook(String id, HttpSession session) {
+        // 获取当前登录的用户信息
+        com.itheima.domain.User user = (com.itheima.domain.User) session.getAttribute("USER_SESSION");
+        try {
+            boolean flag = bookService.returnBook(id, user);
+            if (!flag) {
+                return new Result(false, "还书失败!");
+            }
+            return new Result(true, "还书确认中，请先到行政中心还书!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "还书失败!");
+        }
+    }
+    
+    /**
+     * 归还确认
+     * @param id 图书ID
+     * @return 响应结果
+     */
+    @ResponseBody
+    @RequestMapping("/returnConfirm")
+    public Result returnConfirm(String id) {
+        try {
+            Integer count = bookService.returnConfirm(id);
+            if (count != 1) { 
+                return new Result(false, "确认失败!"); 
+            }
+            return new Result(true, "确认成功!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "确认失败!");
+        }
+    }
+    
+    /**
      * 响应结果内部类
      */
     public static class Result {
